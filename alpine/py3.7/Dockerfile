@@ -24,8 +24,8 @@ RUN set -ex && mkdir /app
 WORKDIR /app
 
 # -- Install build deps:
-ONBUILD COPY builddeps.in builddeps.in
-ONBUILD RUN apk update && cat builddeps.in | xargs apk add --no-cache 
+ONBUILD COPY build-deps.in build-deps.in
+ONBUILD RUN apk update && cat build-deps.in | xargs apk add --no-cache 
 
 # -- Adding requirements.txt:
 ONBUILD COPY requirements.txt requirements.txt
@@ -34,11 +34,11 @@ ONBUILD COPY requirements.txt requirements.txt
 ONBUILD RUN set -ex && pip install -r requirements.txt
 
 # -- Uninstall build deps:
-ONBUILD RUN cat builddeps.in | xargs apk del
+ONBUILD RUN cat build-deps.in | xargs apk del
 
 # -- Install additional packages:
-ONBUILD COPY packages.in packages.in
-ONBUILD RUN cat packages.in | xargs apk add --no-cache 
+ONBUILD COPY runtime-deps.in runtime-deps.in
+ONBUILD RUN cat runtime-deps.in | xargs apk add --no-cache 
 
 # --------------------
 # - Using This File: -
