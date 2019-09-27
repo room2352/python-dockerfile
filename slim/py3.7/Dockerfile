@@ -24,25 +24,18 @@ RUN set -ex && mkdir /app
 
 WORKDIR /app
 
-# -- Install build deps:
+# -- Install build deps and python packages:
 ONBUILD COPY build-deps.in build-deps.in
-ONBUILD RUN apt-get update && cat build-deps.in | xargs apt-get install -y --no-install-recommends
-
-# -- Adding requirements.txt:
 ONBUILD COPY requirements.txt requirements.txt
 
-# -- Install dependencies:
-ONBUILD RUN set -ex && pip install -r requirements.txt
+ONBUILD RUN apt-get update && cat build-deps.in | xargs apt-get install -y --no-install-recommends \
+	&& set -ex && pip install -r requirements.txt \
+	&& cat build-deps.in | xargs apt-get purge -y \
+	&& apt-get autoremove -y && apt-get clean
 
-# -- Uninstall build deps:
-ONBUILD RUN cat build-deps.in | xargs apt-get purge -y
-
-# -- Install additional packages:
+# -- Install runtime dependencies:
 ONBUILD COPY runtime-deps.in runtime-deps.in
-ONBUILD RUN cat runtime-deps.in | xargs apt-get install -y --no-install-recommends
-
-# -- Clean up package caches.
-ONBUILD RUN apt-get autoremove -y && apt-get clean
+ONBUILD RUN cat runtime-deps.in | xargs apt-get install -y --no-install-recommends && apt-get clean
 
 # --------------------
 # - Using This File: -
