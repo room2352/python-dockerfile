@@ -28,14 +28,18 @@ WORKDIR /app
 ONBUILD COPY build-deps.in build-deps.in
 ONBUILD COPY requirements.txt requirements.txt
 
-ONBUILD RUN apt-get update && cat build-deps.in | xargs apt-get install -y --no-install-recommends \
-	&& set -ex && pip install -r requirements.txt \
+ONBUILD RUN set -ex \
+	&& apt-get update && cat build-deps.in | xargs apt-get install -y --no-install-recommends \
+	&& pip install -r requirements.txt \
 	&& cat build-deps.in | xargs apt-get purge -y \
 	&& apt-get autoremove -y && apt-get clean
 
 # -- Install runtime dependencies:
 ONBUILD COPY runtime-deps.in runtime-deps.in
-ONBUILD RUN cat runtime-deps.in | xargs apt-get install -y --no-install-recommends && apt-get clean
+ONBUILD RUN set -ex \
+	&& cat runtime-deps.in | xargs apt-get install -y --no-install-recommends \
+	&& apt-get clean
+
 
 # --------------------
 # - Using This File: -

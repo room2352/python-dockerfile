@@ -27,13 +27,16 @@ WORKDIR /app
 ONBUILD COPY build-deps.in build-deps.in
 ONBUILD COPY requirements.txt requirements.txt
 
-ONBUILD RUN apk update && cat build-deps.in | xargs apk add --no-cache \
-	&& set -ex && pip install -r requirements.txt \
+ONBUILD RUN set -ex \
+	&& apk update && cat build-deps.in | xargs apk add --no-cache \
+	&& pip install -r requirements.txt \
 	&& cat build-deps.in | xargs apk del
 
 # -- Install runtime dependencies:
 ONBUILD COPY runtime-deps.in runtime-deps.in
-ONBUILD RUN cat runtime-deps.in | xargs apk add --no-cache 
+ONBUILD RUN set -ex \
+	&& cat runtime-deps.in | xargs apk add --no-cache 
+
 
 # --------------------
 # - Using This File: -
