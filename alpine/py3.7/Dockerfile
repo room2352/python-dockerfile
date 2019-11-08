@@ -16,7 +16,7 @@ RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.7
 # Backwards compatility.
 RUN rm -fr /usr/local/bin/python3 && ln /usr/local/bin/python3.7 /usr/local/bin/python3
 
-RUN pip3 install pipenv
+RUN pip3 install --no-cache-dir pipenv
 
 # -- Install Application into container:
 RUN set -ex && mkdir /app
@@ -29,7 +29,7 @@ ONBUILD COPY requirements.txt requirements.txt
 
 ONBUILD RUN set -ex \
 	&& apk update && cat build-deps.in | xargs apk add --no-cache \
-	&& pip install -r requirements.txt \
+	&& pip install --no-cache-dir -r requirements.txt \
 	&& cat build-deps.in | xargs apk del
 
 # -- Install runtime dependencies:
