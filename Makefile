@@ -1,6 +1,7 @@
 DOCKER = docker
 IMAGE_NAME = python
 
+
 py3.7-alpine:
 	cat ./alpine/py3.7/Dockerfile | $(DOCKER) build -t "$(IMAGE_NAME):$@" -
 
