@@ -4,13 +4,13 @@ IMAGE_NAME = python
 
 
 py3.7-alpine:
-	cat ./alpine/py3.7/Dockerfile | $(DOCKER) build -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
+	cat ./alpine/py3.7/Dockerfile | $(DOCKER) build --pull -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
 
 py3.7-slim:
-	cat ./slim/py3.7/Dockerfile | $(DOCKER) build -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
+	cat ./slim/py3.7/Dockerfile | $(DOCKER) build --pull -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
 
 pypy3.6-slim:
-	cat ./slim/pypy3.6/Dockerfile | $(DOCKER) build -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
+	cat ./slim/pypy3.6/Dockerfile | $(DOCKER) build --pull -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
 
 
 .PHONY: all
