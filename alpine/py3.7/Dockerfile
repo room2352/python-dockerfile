@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM python:3.7.5-alpine
 
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
@@ -48,3 +48,4 @@ ONBUILD RUN set -ex \
 
 # -- Replace with the correct path to your app's main executable
 # CMD python3 main.py
+

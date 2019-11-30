@@ -1,21 +1,20 @@
-FROM python:3.7.5-slim
+FROM python:3.6.9-alpine
 
-ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 # Python, don't write bytecode!
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # -- Install Pipenv:
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	curl
+RUN apk update && apk add --no-cache \
+   	curl
 
-RUN apt-get clean
+RUN rm -rf /var/cache/apk/*
 
-RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.7
+RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.6
 
 # Backwards compatility.
-RUN rm -fr /usr/local/bin/python3 && ln /usr/local/bin/python3.7 /usr/local/bin/python3
+RUN rm -fr /usr/local/bin/python3 && ln /usr/local/bin/python3.6 /usr/local/bin/python3
 
 RUN pip3 install --no-cache-dir pipenv
 
@@ -29,23 +28,21 @@ ONBUILD COPY build-deps.in build-deps.in
 ONBUILD COPY requirements.txt requirements.txt
 
 ONBUILD RUN set -ex \
-	&& apt-get update && cat build-deps.in | xargs apt-get install -y --no-install-recommends \
+	&& apk update && cat build-deps.in | xargs apk add --no-cache \
 	&& pip install --no-cache-dir -r requirements.txt \
-	&& cat build-deps.in | xargs apt-get purge -y \
-	&& apt-get autoremove -y && apt-get clean
+	&& cat build-deps.in | xargs apk del
 
 # -- Install runtime dependencies:
 ONBUILD COPY runtime-deps.in runtime-deps.in
 ONBUILD RUN set -ex \
-	&& cat runtime-deps.in | xargs apt-get install -y --no-install-recommends \
-	&& apt-get clean
+	&& cat runtime-deps.in | xargs apk add --no-cache 
 
 
 # --------------------
 # - Using This File: -
 # --------------------
 
-# FROM room2352/python:py3.7-slim
+# FROM room2352/python:py3.6-alpine
 
 # COPY . /app
 
