@@ -2,6 +2,14 @@ DOCKER = docker
 REPO_NAME = room2352
 IMAGE_NAME = python
 
+py3.8: py3.8-alpine py3.8-slim
+
+py3.8-alpine:
+	cat ./alpine/py3.8/Dockerfile | $(DOCKER) build --pull -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
+
+py3.8-slim:
+	cat ./slim/py3.8/Dockerfile | $(DOCKER) build --pull -t "$(REPO_NAME)/$(IMAGE_NAME):$@" -
+
 
 py3.7: py3.7-alpine py3.7-slim
 
@@ -28,10 +36,12 @@ pypy3.6-slim:
 
 
 .PHONY: all
-all: py3.7 py3.6 pypy3.6
+all: py3.8 py3.7 py3.6 pypy3.6
 
 .PHONY: clean
 clean:
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-alpine
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-slim
 	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-alpine
 	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-slim
 	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.6-alpine
