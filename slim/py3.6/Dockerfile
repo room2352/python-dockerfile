@@ -7,10 +7,10 @@ ENV LANG C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # -- Install Pipenv:
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	curl
-
-RUN apt-get clean
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		curl \
+	&& apt-get clean
 
 RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.6
 

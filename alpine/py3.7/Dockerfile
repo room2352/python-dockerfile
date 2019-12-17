@@ -6,10 +6,10 @@ ENV LANG C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # -- Install Pipenv:
-RUN apk update && apk add --no-cache \
-   	curl
-
-RUN rm -rf /var/cache/apk/*
+RUN apk update \
+	&& apk add --no-cache \
+		curl \
+	&& rm -rf /var/cache/apk/*
 
 RUN curl --silent https://bootstrap.pypa.io/get-pip.py | python3.7
 
