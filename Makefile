@@ -40,11 +40,11 @@ all: py3.8 py3.7 py3.6 pypy3.6
 
 .PHONY: clean
 clean:
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-alpine
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-slim
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-alpine
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-slim
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.6-alpine
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.6-slim
-	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):pypy3.6-slim
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-alpine 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.8-slim 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-alpine 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.7-slim 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.6-alpine 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):py3.6-slim 2>/dev/null
+	$(DOCKER) rmi -f $(REPO_NAME)/$(IMAGE_NAME):pypy3.6-slim 2>/dev/null
 
