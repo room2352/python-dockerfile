@@ -1,4 +1,4 @@
-FROM python:3.8.0-slim
+FROM python:3.8.1-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
