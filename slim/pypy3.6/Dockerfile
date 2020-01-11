@@ -1,4 +1,4 @@
-FROM pypy:3.6-7.2.0-slim
+FROM pypy:3.6-7.3.0-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
